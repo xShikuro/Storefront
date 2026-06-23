@@ -1,0 +1,19 @@
+:root {
+  --blue: #3b82f6;
+  --dark: #0d0d0f;
+  --drawer: #111113;
+  --drawer-2: #19191c;
+  --muted: #9c9ca3;
+  --line: rgba(255, 255, 255, 0.1);
+  --white: #ffffff;
+}
+
+button,
+input {
+  font: inherit;
+}
+
+button {
+  border: 0;
+  cursor: pointer;
+}

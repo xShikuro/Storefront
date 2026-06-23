@@ -1,0 +1,100 @@
+.action-rail {
+  position: absolute;
+  right: 13px;
+  top: 50%;
+  z-index: 6;
+  display: grid;
+  gap: 7px;
+}
+
+.action-rail button {
+  position: relative;
+  width: 50px;
+  height: 50px;
+  display: grid;
+  place-items: center;
+  padding: 0;
+  background: transparent;
+  color: #fff;
+  pointer-events: auto;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.62));
+  transition: transform 150ms ease, color 150ms ease;
+}
+
+.action-rail button:active {
+  transform: scale(0.9);
+}
+
+.action-rail button.is-blue {
+  color: var(--blue);
+}
+
+.action-rail button.is-sound-on {
+  color: #fff;
+  text-shadow: 0 0 16px rgba(255, 255, 255, 0.42);
+}
+
+.action-rail button.is-sound-on::before {
+  content: "";
+  position: absolute;
+  inset: 5px;
+  z-index: -1;
+  border: 1px solid rgba(255, 255, 255, 0.42);
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.08);
+  box-shadow: 0 0 18px rgba(255, 255, 255, 0.16);
+}
+
+.action-rail svg {
+  width: 29px;
+  height: 29px;
+}
+
+.rail-note {
+  position: absolute;
+  top: 26px;
+  right: 0;
+  width: 54px;
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 9px;
+  font-weight: 800;
+  line-height: 0.95;
+  text-align: center;
+}
+
+.rail-badge {
+  position: absolute;
+  top: 5px;
+  right: 3px;
+  min-width: 18px;
+  height: 18px;
+  display: grid;
+  place-items: center;
+  border-radius: 999px;
+  background: var(--blue);
+  color: #fff;
+  font-size: 11px;
+  font-weight: 900;
+}
+
+.rail-count {
+  position: absolute;
+  top: 4px;
+  right: 2px;
+  min-width: 18px;
+  height: 18px;
+  display: grid;
+  place-items: center;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.94);
+  color: #111;
+  font-size: 11px;
+  font-weight: 900;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.34);
+}
+
+@media (max-width: 380px) {
+  .action-rail {
+    right: 12px;
+  }
+}

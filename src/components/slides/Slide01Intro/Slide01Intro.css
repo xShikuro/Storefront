@@ -1,0 +1,63 @@
+.intro-slide {
+  background: #164d82;
+}
+
+.intro-buttons {
+  position: absolute;
+  top: 31%;
+  left: 24px;
+  z-index: 2;
+  display: grid;
+  gap: 12px;
+  width: 166px;
+}
+
+.intro-shop {
+  min-height: 50px;
+  padding: 0 18px;
+  border-radius: 9px;
+  color: rgba(255, 255, 255, 0.78);
+  font-size: 14px;
+  font-weight: 900;
+  text-align: center;
+}
+
+.intro-shop-1 {
+  background: #33395d;
+}
+
+.intro-shop-2 {
+  background: #4c8881;
+  color: #fff;
+}
+
+.intro-shop-3 {
+  background: #536d94;
+  color: #fff;
+}
+
+.intro-shop-4 {
+  background: #332328;
+}
+
+.swipe-hint {
+  position: absolute;
+  right: 0;
+  bottom: 28px;
+  left: 0;
+  z-index: 2;
+  display: grid;
+  gap: 7px;
+  justify-items: center;
+  background: transparent;
+  color: rgba(255, 255, 255, 0.52);
+  font-size: 12px;
+  font-weight: 900;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+.swipe-hint span {
+  font-size: 24px;
+  line-height: 0.7;
+}

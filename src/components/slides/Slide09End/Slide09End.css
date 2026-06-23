@@ -1,0 +1,43 @@
+.end-slide {
+  display: grid;
+  place-items: center;
+  align-content: center;
+  padding: 24px;
+  text-align: center;
+  background:
+    radial-gradient(circle at 50% 35%, rgba(80, 55, 120, 0.15), transparent 26%),
+    #020203;
+}
+
+.end-slide .logo-mark {
+  width: 84px;
+  height: 84px;
+  margin-bottom: 30px;
+}
+
+.end-slide h2 {
+  max-width: 310px;
+  margin: 0;
+  font-size: 22px;
+  line-height: 1.1;
+  font-weight: 900;
+}
+
+.end-slide p {
+  max-width: 290px;
+  margin: 28px 0 26px;
+  color: rgba(255, 255, 255, 0.34);
+  font-size: 15px;
+  font-weight: 800;
+  line-height: 1.35;
+}
+
+.end-slide button {
+  width: min(290px, 100%);
+  height: 53px;
+  border-radius: 13px;
+  background: #030303;
+  color: #fff;
+  font-weight: 900;
+  box-shadow: 0 20px 45px rgba(102, 51, 255, 0.24);
+}

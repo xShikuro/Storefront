@@ -1,0 +1,11 @@
+.product-dewy-full .feed-video {
+  object-position: center;
+}
+
+.product-dewy-full .feed-copy.is-expanded {
+  bottom: 92px;
+}
+
+.product-dewy-full .story-progress {
+  display: none;
+}

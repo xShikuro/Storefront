@@ -1,0 +1,18 @@
+.product-dewy .feed-video {
+  object-position: center;
+}
+
+.product-dewy .feed-copy {
+  bottom: 130px;
+}
+
+.product-dewy .story-progress {
+  display: none;
+}
+
+.product-dewy[data-variant='50-ml'] .feed-video,
+.product-dewy[data-variant='30-ml'] .feed-video,
+.product-dewy[data-variant='rice-polish'] .feed-video {
+  object-position: center;
+  filter: saturate(0.92);
+}
