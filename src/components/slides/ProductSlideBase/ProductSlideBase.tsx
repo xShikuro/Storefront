@@ -40,12 +40,13 @@ export function ProductSlideBase({
 }: ProductSlideBaseProps) {
   const [expanded, setExpanded] = useState(false)
   const [selectedVariantIndex, setSelectedVariantIndex] = useState(
-    slide.initialVariantIndex ?? 0,
+    slide.startWithBaseMedia ? -1 : slide.initialVariantIndex ?? 0,
   )
   const [variantAnimationKey, setVariantAnimationKey] = useState(0)
 
   const toggleExpanded = () => setExpanded((value) => !value)
-  const selectedVariant = slide.variants?.[selectedVariantIndex]
+  const selectedVariant =
+    selectedVariantIndex >= 0 ? slide.variants?.[selectedVariantIndex] : undefined
   const showVariantChips = Boolean(slide.chips || (slide.variants && !slide.variantTiles))
   const engagement = engagementByProduct[slide.id] ?? emptyEngagement
   const visibleSlide: ProductSlide = selectedVariant
@@ -201,7 +202,9 @@ export function ProductSlideBase({
         activeSlideId={slide.id}
         activeVariantIndex={selectedVariantIndex}
         slides={progressSlides}
-        variantCount={slide.variants?.length}
+        variantCount={
+          slide.variants && selectedVariantIndex >= 0 ? slide.variants.length : undefined
+        }
       />
     </section>
   )

@@ -110,16 +110,19 @@ export const dewySkinCreamSlide: ProductSlide = {
   ],
 }
 
+const longevityMemoryDescription =
+  'Youth-Restoring Moisturizer Recommended for All Skin Types, Hydrating, Plumping Formulated...'
+
+const longevityMemoryDetails = [
+  'Youth-Restoring Moisturizer.',
+  'Recommended for All Skin Types, Hydrating, Plumping.',
+  'Non-Comedogenic, Dermatologist Tested, Cruelty-free.',
+]
+
 export const longevityMemorySlide: ProductSlide = {
   cta: 'add',
-  chips: ['Full', 'Mini'],
-  description:
-    'Youth-Restoring Moisturizer Recommended for All Skin Types, Hydrating, Plumping Formulated...',
-  details: [
-    'Youth-Restoring Moisturizer.',
-    'Recommended for All Skin Types, Hydrating, Plumping.',
-    'Non-Comedogenic, Dermatologist Tested, Cruelty-free.',
-  ],
+  description: longevityMemoryDescription,
+  details: longevityMemoryDetails,
   id: 'longevity-memory',
   kind: 'product',
   media: {
@@ -127,19 +130,49 @@ export const longevityMemorySlide: ProductSlide = {
     src: '/longevity-video.mp4',
     type: 'video',
   },
+  startWithBaseMedia: true,
   title: 'THE LONGEVITY MEMORY CREAM',
+  variants: [
+    {
+      chip: 'Full',
+      description: longevityMemoryDescription,
+      details: longevityMemoryDetails,
+      id: 'full',
+      media: {
+        poster: '/longevity-full-variant.png',
+        type: 'image',
+      },
+      price: 92,
+      title: 'THE LONGEVITY MEMORY CREAM',
+    },
+    {
+      chip: 'Mini',
+      description: longevityMemoryDescription,
+      details: longevityMemoryDetails,
+      id: 'mini',
+      media: {
+        poster: '/longevity-mini-variant.png',
+        type: 'image',
+      },
+      price: 32,
+      title: 'MINI THE LONGEVITY MEMORY CREAM',
+    },
+  ],
 }
+
+const silkSerumDescription =
+  'Wrinkle-Smoothing Retinol Alternative Recommended for Hydrating, Healthy Aging, Firming,...'
+
+const silkSerumDetails = [
+  'Wrinkle-Smoothing Retinol Alternative.',
+  'Recommended for Hydrating, Healthy Aging, Firming, Even Skin Tone.',
+  'Dermatologist tested, Cruelty free.',
+]
 
 export const silkSerumSlide: ProductSlide = {
   cta: 'add',
-  chips: ['Mini', 'Full.'],
-  description:
-    'Wrinkle-Smoothing Retinol Alternative Recommended for Hydrating, Healthy Aging, Firming,...',
-  details: [
-    'Wrinkle-Smoothing Retinol Alternative.',
-    'Recommended for Hydrating, Healthy Aging, Firming, Even Skin Tone.',
-    'Dermatologist tested, Cruelty free.',
-  ],
+  description: silkSerumDescription,
+  details: silkSerumDetails,
   id: 'silk',
   kind: 'product',
   media: {
@@ -148,7 +181,34 @@ export const silkSerumSlide: ProductSlide = {
     type: 'video',
   },
   price: 99,
+  startWithBaseMedia: true,
   title: 'THE SILK SERUM',
+  variants: [
+    {
+      chip: 'Mini',
+      description: silkSerumDescription,
+      details: silkSerumDetails,
+      id: 'mini',
+      media: {
+        poster: '/silk-mini-variant.png',
+        type: 'image',
+      },
+      price: 39,
+      title: 'THE SILK SERUM',
+    },
+    {
+      chip: 'Full.',
+      description: silkSerumDescription,
+      details: silkSerumDetails,
+      id: 'full',
+      media: {
+        poster: '/silk-full-variant.png',
+        type: 'image',
+      },
+      price: 99,
+      title: 'THE SILK SERUM',
+    },
+  ],
 }
 
 export const waterCreamSlide: ProductSlide = {

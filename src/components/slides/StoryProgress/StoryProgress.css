@@ -13,8 +13,12 @@
   height: 3px;
   border-radius: 999px;
   background: rgba(255, 255, 255, 0.22);
+  transition:
+    background 180ms ease,
+    transform 180ms ease;
 }
 
 .story-progress span.is-active {
   background: #fff;
+  transform: scaleY(1.2);
 }

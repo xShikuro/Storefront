@@ -43,6 +43,7 @@ export type ProductSlide = {
     type: 'image' | 'video'
   }
   price?: number
+  startWithBaseMedia?: boolean
   title: string
   variants?: ProductVariant[]
   variantTiles?: {

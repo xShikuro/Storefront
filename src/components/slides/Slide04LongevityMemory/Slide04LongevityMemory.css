@@ -1,3 +1,9 @@
 .product-longevity-memory .feed-video {
   object-position: center;
 }
+
+.product-longevity-memory[data-variant='full'] .feed-video,
+.product-longevity-memory[data-variant='mini'] .feed-video {
+  object-position: center;
+  filter: saturate(0.96);
+}
