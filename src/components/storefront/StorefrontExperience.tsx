@@ -4,7 +4,9 @@ import { Feed } from '../feed/Feed'
 import { AppShell } from '../layout/AppShell'
 import { PhoneFrame } from '../layout/PhoneFrame'
 import { feedSlides, productSlides } from '../slides/slideRegistry'
-import type { CartItem, Overlay, ProductEngagement } from '../../types/storefront'
+import { useCart } from '../../hooks/useCart'
+import { useCheckout } from '../../hooks/useCheckout'
+import type { Overlay, ProductEngagement } from '../../types/storefront'
 import { getInitialSlide } from '../../utils/getInitialSlide'
 import '../../styles/theme.css'
 
@@ -18,7 +20,6 @@ export function StorefrontExperience() {
   const [initialSlide] = useState(() => getInitialSlide(feedSlides.length - 1))
   const [activeIndex, setActiveIndex] = useState(initialSlide)
   const [overlay, setOverlay] = useState<Overlay>(null)
-  const [cartItems, setCartItems] = useState<CartItem[]>([])
   const [engagementByProduct, setEngagementByProduct] = useState<
     Record<string, ProductEngagement>
   >({})
@@ -30,8 +31,39 @@ export function StorefrontExperience() {
   const activeSlide = feedSlides[activeIndex]
   const activeProduct =
     activeSlide.kind === 'product' ? activeSlide.product : productSlides[0]
+  const {
+    addToCart,
+    cartItems,
+    cartQuantity,
+    clearCart,
+    decreaseCartItem,
+    increaseCartItem,
+    removeCartItem,
+  } = useCart(activeProduct)
+
+  const showToast = (message: string) => {
+    setToast(message)
+    window.setTimeout(() => setToast(''), 1800)
+  }
+
+  const {
+    checkoutError,
+    checkoutOrder,
+    clearCheckoutError,
+    isSubmittingOrder,
+    orderDraft,
+    setOrderDraft,
+    submittedOrder,
+    submitOrder,
+  } = useCheckout({
+    cartItems,
+    cartQuantity,
+    clearCart,
+    setOverlay,
+    showToast,
+  })
+
   const activeEngagement = engagementByProduct[activeProduct.id] ?? emptyEngagement
-  const cartQuantity = cartItems.reduce((total, item) => total + item.quantity, 0)
 
   useEffect(() => {
     if (!feedRef.current || initialSlide === 0) {
@@ -63,11 +95,6 @@ export function StorefrontExperience() {
     })
     setActiveIndex(index)
     setOverlay(null)
-  }
-
-  const showToast = (message: string) => {
-    setToast(message)
-    window.setTimeout(() => setToast(''), 1800)
   }
 
   const updateActiveEngagement = (
@@ -103,45 +130,6 @@ export function StorefrontExperience() {
     if (!chatText.trim()) return
     setChatText('')
     showToast('AI консультант получил вопрос')
-  }
-
-  const addToCart = (product = activeProduct) => {
-    setCartItems((items) => {
-      const currentItem = items.find((item) => item.product.id === product.id)
-
-      if (!currentItem) {
-        return [...items, { product, quantity: 1 }]
-      }
-
-      return items.map((item) =>
-        item.product.id === product.id
-          ? { ...item, quantity: item.quantity + 1 }
-          : item,
-      )
-    })
-  }
-
-  const increaseCartItem = (productId: string) => {
-    setCartItems((items) =>
-      items.map((item) =>
-        item.product.id === productId
-          ? { ...item, quantity: item.quantity + 1 }
-          : item,
-      ),
-    )
-  }
-
-  const decreaseCartItem = (productId: string) => {
-    setCartItems((items) =>
-      items.flatMap((item) => {
-        if (item.product.id !== productId) {
-          return [item]
-        }
-
-        const quantity = item.quantity - 1
-        return quantity > 0 ? [{ ...item, quantity }] : []
-      }),
-    )
   }
 
   const share = async (product = activeProduct) => {
@@ -185,13 +173,18 @@ export function StorefrontExperience() {
             cartItems={cartItems}
             cartQuantity={cartQuantity}
             chatText={chatText}
+            checkoutError={checkoutError}
+            checkoutOrder={checkoutOrder}
+            clearCheckoutError={clearCheckoutError}
             closeOverlay={closeOverlay}
             engagement={activeEngagement}
             engagementByProduct={engagementByProduct}
             feedRef={feedRef}
+            isSubmittingOrder={isSubmittingOrder}
             muted={muted}
             openOverlay={openOverlay}
             overlay={overlay}
+            orderDraft={orderDraft}
             productSlides={productSlides}
             reviewText={reviewText}
             scrollToSlide={scrollToSlide}
@@ -199,13 +192,17 @@ export function StorefrontExperience() {
             setChatText={setChatText}
             decreaseCartItem={decreaseCartItem}
             increaseCartItem={increaseCartItem}
+            removeCartItem={removeCartItem}
             setLiked={setActiveProductLiked}
             setMuted={setMuted}
             setOverlay={setOverlay}
+            setOrderDraft={setOrderDraft}
             setReviewText={setReviewText}
             share={share}
             slides={feedSlides}
+            submittedOrder={submittedOrder}
             submitChat={submitChat}
+            submitOrder={submitOrder}
             submitReview={submitReview}
             toast={toast}
           />

@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { storefrontConfig } from '../../../data/storefrontConfig'
 import type { Overlay, ProductEngagement, ProductSlide } from '../../../types/storefront'
 import { ActionRail } from '../../feed/ActionRail'
 import { Icon } from '../../shared/Icon'
@@ -38,6 +39,7 @@ export function ProductSlideBase({
   share,
   slide,
 }: ProductSlideBaseProps) {
+  const { commerce, labels, links } = storefrontConfig
   const [expanded, setExpanded] = useState(false)
   const [selectedVariantIndex, setSelectedVariantIndex] = useState(
     slide.startWithBaseMedia ? -1 : slide.initialVariantIndex ?? 0,
@@ -169,15 +171,19 @@ export function ProductSlideBase({
         )}
       </section>
 
-      <a className="powered" href="https://shop.vibevox.pro/" aria-label="Powered by">
-        <span>POWERED BY</span>
-        <strong>SHOP.VIBEVOX.PRO</strong>
+      <a
+        className="powered"
+        href={links.poweredBy.url}
+        aria-label={links.poweredBy.label}
+      >
+        <span>{links.poweredBy.label}</span>
+        <strong>{links.poweredBy.name}</strong>
       </a>
 
       {visibleSlide.price && (
         <div className="slide-price">
           <strong>{visibleSlide.price}</strong>
-          <span>USD</span>
+          <span>{commerce.currency}</span>
         </div>
       )}
 
@@ -189,11 +195,11 @@ export function ProductSlideBase({
         }
       >
         {visibleSlide.cta === 'analysis' ? (
-          '✨ Facial analysis'
+          labels.facialAnalysis
         ) : (
           <>
             <Icon name={visibleSlide.addIcon ?? 'bag'} />
-            ДОБАВИТЬ
+            {labels.addToCart}
           </>
         )}
       </button>

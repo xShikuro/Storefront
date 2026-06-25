@@ -1,24 +1,27 @@
+import { storefrontConfig } from '../../data/storefrontConfig'
 import { LogoMark } from '../shared/LogoMark'
 import { QRPattern } from '../shared/QRPattern'
 import './DesktopQR.css'
 
 export function DesktopQR() {
+  const { brand, qr } = storefrontConfig
+
   return (
-    <aside className="desktop-qr" aria-label="Mobile app QR">
-      <span>SCAN FOR MOBILE APP</span>
+    <aside className="desktop-qr" aria-label={qr.ariaLabel}>
+      <span>{qr.title}</span>
       <QRPattern />
       <div className="qr-brand">
         <LogoMark />
-        <span>T A T C H A</span>
+        <span>{brand.displayName}</span>
       </div>
       <div className="qr-line" />
       <strong>
-        Unlock the
+        {qr.headline[0]}
         <br />
-        full potential.
+        {qr.headline[1]}
       </strong>
-      <p>Scan to experience our mobile version.</p>
-      <small>VIBEADD</small>
+      <p>{qr.description}</p>
+      <small>{qr.footer}</small>
     </aside>
   )
 }

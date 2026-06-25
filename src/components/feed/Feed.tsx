@@ -1,10 +1,15 @@
-import type { FormEvent, RefObject } from 'react'
+import type { Dispatch, FormEvent, RefObject, SetStateAction } from 'react'
 import type {
   CartItem,
+  CheckoutOrder,
+  CheckoutValidationError,
+  OrderDraft,
   Overlay,
   ProductEngagement,
   ProductSlide,
+  SubmittedOrder,
 } from '../../types/storefront'
+import { storefrontConfig } from '../../data/storefrontConfig'
 import type { FeedSlideEntry } from '../slides/types'
 import { Icon } from '../shared/Icon'
 import { LogoMark } from '../shared/LogoMark'
@@ -18,15 +23,21 @@ type FeedProps = {
   cartItems: CartItem[]
   cartQuantity: number
   chatText: string
+  checkoutError: CheckoutValidationError | null
+  checkoutOrder: CheckoutOrder
+  clearCheckoutError: () => void
   closeOverlay: () => void
   engagement: ProductEngagement
   engagementByProduct: Record<string, ProductEngagement>
   feedRef: RefObject<HTMLDivElement | null>
+  isSubmittingOrder: boolean
   muted: boolean
   openOverlay: (overlay: Overlay) => void
   overlay: Overlay
+  orderDraft: OrderDraft
   productSlides: ProductSlide[]
   reviewText: string
+  removeCartItem: (productId: string) => void
   scrollToSlide: (index: number) => void
   setActiveIndex: (index: number) => void
   setChatText: (value: string) => void
@@ -35,10 +46,13 @@ type FeedProps = {
   setLiked: (value: boolean) => void
   setMuted: (updater: (value: boolean) => boolean) => void
   setOverlay: (overlay: Overlay) => void
+  setOrderDraft: Dispatch<SetStateAction<OrderDraft>>
   setReviewText: (value: string) => void
   share: (product?: ProductSlide) => void
   slides: FeedSlideEntry[]
+  submittedOrder: SubmittedOrder | null
   submitChat: (event: FormEvent<HTMLFormElement>) => void
+  submitOrder: () => void
   submitReview: (event: FormEvent<HTMLFormElement>) => void
   toast: string
 }
@@ -50,15 +64,21 @@ export function Feed({
   cartItems,
   cartQuantity,
   chatText,
+  checkoutError,
+  checkoutOrder,
+  clearCheckoutError,
   closeOverlay,
   engagement,
   engagementByProduct,
   feedRef,
+  isSubmittingOrder,
   muted,
   openOverlay,
   overlay,
+  orderDraft,
   productSlides,
   reviewText,
+  removeCartItem,
   scrollToSlide,
   setActiveIndex,
   setChatText,
@@ -67,15 +87,20 @@ export function Feed({
   setLiked,
   setMuted,
   setOverlay,
+  setOrderDraft,
   setReviewText,
   share,
   slides,
+  submittedOrder,
   submitChat,
+  submitOrder,
   submitReview,
   toast,
 }: FeedProps) {
+  const { brand, links } = storefrontConfig
+
   return (
-    <section className="feed" aria-label="Tatcha product feed">
+    <section className="feed" aria-label={brand.feedLabel}>
       <div
         className="feed-track"
         ref={feedRef}
@@ -112,16 +137,16 @@ export function Feed({
         <button
           className="brand-button"
           type="button"
-          aria-label="Tatcha home"
+          aria-label={brand.homeLabel}
           onClick={() => scrollToSlide(0)}
         >
           <LogoMark />
-          <span>T A T C H A</span>
+          <span>{brand.displayName}</span>
         </button>
         <a
           className="circle-link"
-          href="https://www.instagram.com/tatcha/"
-          aria-label="Instagram"
+          href={links.instagram.url}
+          aria-label={links.instagram.label}
           target="_blank"
           rel="noreferrer"
         >
@@ -136,16 +161,25 @@ export function Feed({
           cartItems={cartItems}
           cartQuantity={cartQuantity}
           chatText={chatText}
+          checkoutError={checkoutError}
+          checkoutOrder={checkoutOrder}
+          clearCheckoutError={clearCheckoutError}
           closeOverlay={closeOverlay}
           decreaseCartItem={decreaseCartItem}
           increaseCartItem={increaseCartItem}
+          isSubmittingOrder={isSubmittingOrder}
+          removeCartItem={removeCartItem}
           engagement={engagement}
+          orderDraft={orderDraft}
           overlay={overlay}
           reviewText={reviewText}
           setChatText={setChatText}
           setLiked={setLiked}
+          setOrderDraft={setOrderDraft}
           setReviewText={setReviewText}
+          submittedOrder={submittedOrder}
           submitChat={submitChat}
+          submitOrder={submitOrder}
           submitReview={submitReview}
         />
       )}
