@@ -8,7 +8,9 @@ import {
   waterCreamSlide,
   waterRefillSlide,
 } from '../../data/productSlides'
+import type { ProductSlide } from '../../types/storefront'
 import type { FeedSlideEntry } from './types'
+import { DynamicProductSlide } from './DynamicProductSlide/DynamicProductSlide'
 import { Slide01Intro } from './Slide01Intro/Slide01Intro'
 import { Slide02DewyFull } from './Slide02DewyFull/Slide02DewyFull'
 import { Slide03DewySkinCream } from './Slide03DewySkinCream/Slide03DewySkinCream'
@@ -18,6 +20,19 @@ import { Slide06WaterCream } from './Slide06WaterCream/Slide06WaterCream'
 import { Slide07WaterRefill } from './Slide07WaterRefill/Slide07WaterRefill'
 import { Slide08FaceAi } from './Slide08FaceAi/Slide08FaceAi'
 import { Slide09End } from './Slide09End/Slide09End'
+
+export function createDynamicFeedSlides(products: ProductSlide[]): FeedSlideEntry[] {
+  return [
+    { Component: Slide01Intro, id: 'intro', kind: 'intro' },
+    ...products.map((product) => ({
+      Component: DynamicProductSlide,
+      id: product.id,
+      kind: 'product' as const,
+      product,
+    })),
+    { Component: Slide09End, id: 'end', kind: 'end' },
+  ]
+}
 
 export const feedSlides: FeedSlideEntry[] = [
   { Component: Slide01Intro, id: 'intro', kind: 'intro' },

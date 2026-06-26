@@ -13,6 +13,7 @@ export type SlideRendererProps = {
   scrollToSlide: (index: number) => void
   setMuted: (updater: (value: boolean) => boolean) => void
   share: (product?: ProductSlide) => void
+  slide?: ProductSlide
 }
 
 export type FeedSlideEntry =

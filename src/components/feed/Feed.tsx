@@ -115,22 +115,27 @@ export function Feed({
           }
         }}
       >
-        {slides.map(({ Component, id }, index) => (
-          <Component
-            active={activeIndex === index}
-            addToCart={addToCart}
-            cartQuantity={cartQuantity}
-            engagementByProduct={engagementByProduct}
-            key={id}
-            muted={muted}
-            openOverlay={openOverlay}
-            overlay={overlay}
-            progressSlides={productSlides}
-            scrollToSlide={scrollToSlide}
-            setMuted={setMuted}
-            share={share}
-          />
-        ))}
+        {slides.map((entry, index) => {
+          const { Component, id } = entry
+
+          return (
+            <Component
+              active={activeIndex === index}
+              addToCart={addToCart}
+              cartQuantity={cartQuantity}
+              engagementByProduct={engagementByProduct}
+              key={id}
+              muted={muted}
+              openOverlay={openOverlay}
+              overlay={overlay}
+              progressSlides={productSlides}
+              scrollToSlide={scrollToSlide}
+              setMuted={setMuted}
+              share={share}
+              slide={entry.kind === 'product' ? entry.product : undefined}
+            />
+          )
+        })}
       </div>
 
       <header className="feed-top">

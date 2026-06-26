@@ -3,8 +3,8 @@ import { AnalysisScreen } from '../analysis/AnalysisScreen'
 import { Feed } from '../feed/Feed'
 import { AppShell } from '../layout/AppShell'
 import { PhoneFrame } from '../layout/PhoneFrame'
-import { feedSlides, productSlides } from '../slides/slideRegistry'
 import { useCart } from '../../hooks/useCart'
+import { useCatalogSlides } from '../../hooks/useCatalogSlides'
 import { useCheckout } from '../../hooks/useCheckout'
 import type { Overlay, ProductEngagement } from '../../types/storefront'
 import { getInitialSlide } from '../../utils/getInitialSlide'
@@ -17,6 +17,8 @@ const emptyEngagement: ProductEngagement = {
 
 export function StorefrontExperience() {
   const feedRef = useRef<HTMLDivElement | null>(null)
+  const catalogSlides = useCatalogSlides()
+  const { feedSlides, productSlides } = catalogSlides
   const [initialSlide] = useState(() => getInitialSlide(feedSlides.length - 1))
   const [activeIndex, setActiveIndex] = useState(initialSlide)
   const [overlay, setOverlay] = useState<Overlay>(null)
@@ -28,7 +30,8 @@ export function StorefrontExperience() {
   const [chatText, setChatText] = useState('')
   const [toast, setToast] = useState('')
 
-  const activeSlide = feedSlides[activeIndex]
+  const safeActiveIndex = Math.max(0, Math.min(feedSlides.length - 1, activeIndex))
+  const activeSlide = feedSlides[safeActiveIndex] ?? feedSlides[0]
   const activeProduct =
     activeSlide.kind === 'product' ? activeSlide.product : productSlides[0]
   const {
@@ -167,7 +170,7 @@ export function StorefrontExperience() {
       ) : (
         <PhoneFrame>
           <Feed
-            activeIndex={activeIndex}
+            activeIndex={safeActiveIndex}
             activeProduct={activeProduct}
             addToCart={addToCart}
             cartItems={cartItems}

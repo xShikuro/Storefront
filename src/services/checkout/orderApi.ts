@@ -1,12 +1,16 @@
 import type { CheckoutOrder, SubmittedOrder } from '../../types/storefront'
 
-let orderSequence = 1
+type SubmitOrderResponse =
+  | {
+      ok: true
+      order: SubmittedOrder
+    }
+  | {
+      message?: string
+      ok: false
+    }
 
-function createOrderNumber() {
-  const orderNumber = `#${String(orderSequence).padStart(4, '0')}`
-  orderSequence += 1
-  return orderNumber
-}
+const orderApiUrl = import.meta.env.VITE_ORDER_API_URL ?? '/api/orders'
 
 function normalizeOrder(order: CheckoutOrder): CheckoutOrder {
   return {
@@ -24,17 +28,18 @@ function normalizeOrder(order: CheckoutOrder): CheckoutOrder {
 }
 
 export async function submitCheckoutOrder(order: CheckoutOrder): Promise<SubmittedOrder> {
-  await new Promise((resolve) => {
-    window.setTimeout(resolve, 650)
+  const response = await fetch(orderApiUrl, {
+    body: JSON.stringify(normalizeOrder(order)),
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    method: 'POST',
   })
+  const data = (await response.json()) as SubmitOrderResponse
 
-  const normalizedOrder = normalizeOrder(order)
-  const submittedOrder = {
-    ...normalizedOrder,
-    createdAt: new Date().toISOString(),
-    orderNumber: createOrderNumber(),
+  if (!response.ok || !data.ok) {
+    throw new Error(data.ok ? 'Order request failed.' : data.message)
   }
 
-  console.info('Checkout order', submittedOrder)
-  return submittedOrder
+  return data.order
 }
